@@ -4,6 +4,130 @@
 
 ##### Enhancements
 
+* None.  
+
+##### Bug Fixes
+
+* None.  
+
+
+## 1.27.0 (2024-10-31)
+
+##### Enhancements
+
+* None.  
+
+##### Bug Fixes
+
+* Revert default build settings changes from https://github.com/CocoaPods/Xcodeproj/pull/987.  
+  [Eric Amorde](https://github.com/amorde)
+  [#992](https://github.com/CocoaPods/Xcodeproj/pull/992)
+
+
+## 1.26.0 (2024-10-27)
+
+##### Enhancements
+
+* Add support for file system synchronized groups introduced in Xcode 16.  
+  [Brett-Best](https://github.com/Brett-Best), [gui17aume](https://github.com/gui17aume)
+  [#985](https://github.com/CocoaPods/Xcodeproj/pull/985)
+
+* Update default build settings for Xcode 16.0.  
+  [Eric Amorde](https://github.com/amorde)
+  [#987](https://github.com/CocoaPods/Xcodeproj/pull/987)
+
+##### Bug Fixes
+
+* None.  
+
+
+## 1.25.1 (2024-10-03)
+
+##### Enhancements
+
+* None.  
+
+##### Bug Fixes
+
+* Bump `rexml` dependency to address [CVE-2024-43398](https://www.ruby-lang.org/en/news/2024/08/22/dos-rexml-cve-2024-43398/).  
+  [Eric Amorde](https://github.com/amorde)
+  [#970](https://github.com/CocoaPods/Xcodeproj/pull/970)
+
+
+## 1.25.0 (2024-08-07)
+
+##### Enhancements
+
+* Print a warning instead of raising an exception when an unrecognized Xcode project object version is found.  
+  [Kaspik](https://github.com/Kaspik)
+  [#953](https://github.com/CocoaPods/Xcodeproj/pull/953)
+
+* Add support for optional includes (via `#include?`) in xcconfig files.  
+  [Werelds](https://github.com/Werelds)
+  [#940](https://github.com/CocoaPods/Xcodeproj/pull/940)
+
+* Add support for Xcode 15.3 project versions.  
+  [Brett-Best](https://github.com/Brett-Best)
+  [#934](https://github.com/CocoaPods/Xcodeproj/pull/934)
+
+
+##### Bug Fixes
+
+* Bump `rexml` dependency to address [CVE-2024-399086](https://www.cve.org/CVERecord?id=CVE-2024-399086).  
+  [bmedenwald](https://github.com/bmedenwald)
+  [#948](https://github.com/CocoaPods/Xcodeproj/pull/948)
+
+
+## 1.24.0 (2024-01-28)
+
+##### Enhancements
+
+* Add `expected_signature support` for `PBXFileReference`.  
+  [hieu9102002](https://github.com/hieu9102002)
+  [#924](https://github.com/CocoaPods/Xcodeproj/pull/924)
+
+##### Bug Fixes
+
+* Update remote Swift packages annotations to match Xcode.  
+   [alexandre-pod](https://github.com/alexandre-pod)
+   [#921](https://github.com/CocoaPods/Xcodeproj/pull/921)
+
+* Fix a crash when serializing a target dependency without a target proxy.  
+   [byohay](https://github.com/byohay)
+   [#915](https://github.com/CocoaPods/Xcodeproj/pull/915)
+
+
+## 1.23.0 (2023-09-22)
+
+##### Enhancements
+
+* Add support for parsing `XCLocalSwiftPackageReference` objects.  
+  [Dimitris Koutsogiorgas](https://github.com/dnkoutso)
+  [#911](https://github.com/CocoaPods/Xcodeproj/pull/911)
+  
+* Add Xcode 15.0 object version support.  
+  [Dimitris Koutsogiorgas](https://github.com/dnkoutso)
+  [#910](https://github.com/CocoaPods/Xcodeproj/pull/910)  
+
+* Add `visionOS` as a new platform.  
+  [Gabriel Donadel](https://github.com/gabrieldonadel)
+  [#913](https://github.com/CocoaPods/Xcodeproj/pull/913)
+
+##### Bug Fixes
+
+* target_dependency: Fix crash if target_proxy is nil.  
+  [Ben Yohay](https://github.com/byohay)
+  [#915](https://github.com/CocoaPods/Xcodeproj/pull/915)
+
+
+## 1.22.0 (2022-06-22)
+
+##### Enhancements
+
+* Add Xcode 14.0 object version support.  
+  [florianhieger](https://github.com/florianhieger)
+  [#884](https://github.com/CocoaPods/Xcodeproj/pull/884)
+
 * Bump Xcode version to match Xcode 13  
   [Eric Firestone](https://github.com/efirestone)
   [#857](https://github.com/CocoaPods/Xcodeproj/pull/857)
@@ -16,9 +140,31 @@
   [Max Langer](https://github.com/mangerlahn)
   [#853](https://github.com/CocoaPods/Xcodeproj/pull/853) 
 
+* Add `dependency_file` support for `PBXBuildRule`.  
+  [Zachary Waldowski](https://github.com/zwaldowski)
+  [#862](https://github.com/CocoaPods/Xcodeproj/pull/862)
+
+* Remove build files when underlying file_ref is removed.  
+  [Ben Yohay](https://github.com/byohay)
+  [#861](https://github.com/CocoaPods/Xcodeproj/pull/861)
+
+* Add `code_coverage_targets` support for `TestAction`.  
+  [Joey Dong](https://github.com/joeydong)
+  [#874](https://github.com/CocoaPods/Xcodeproj/pull/874)
+
+* Reword misleading warning diagnostic for the `--project` option.  
+  [lemonspike](https://github.com/LemonSpike)
+  [#709](https://github.com/CocoaPods/Xcodeproj/issues/709)
+
+* Do not raise an exception on a Swift Package dependency.  
+  [Vincent Isambart](https://github.com/vincentisambart)
+  [#743](https://github.com/CocoaPods/Xcodeproj/issues/743)
+
 ##### Bug Fixes
 
-* None.  
+* Fix undefined method 'downcase' for `nil`  
+  [LWX124](https://github.com/LWX124)
+  [#865](https://github.com/CocoaPods/Xcodeproj/pull/865)
 
 
 ## 1.21.0 (2021-08-09)

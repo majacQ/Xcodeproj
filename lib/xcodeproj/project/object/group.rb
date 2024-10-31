@@ -1,5 +1,6 @@
 require 'xcodeproj/project/object/helpers/groupable_helper'
 require 'xcodeproj/project/object/helpers/file_references_factory'
+require 'xcodeproj/project/object/file_system_synchronized_root_group'
 
 module Xcodeproj
   class Project
@@ -13,7 +14,7 @@ module Xcodeproj
         # @return [ObjectList<PBXGroup, PBXFileReference>]
         #         the objects contained by the group.
         #
-        has_many :children, [PBXGroup, PBXFileReference, PBXReferenceProxy]
+        has_many :children, [PBXGroup, PBXFileReference, PBXReferenceProxy, PBXFileSystemSynchronizedRootGroup]
 
         # @return [String] the directory to which the path is relative.
         #
@@ -441,12 +442,31 @@ module Xcodeproj
             result = File.basename(x.display_name.downcase, '.*') <=> File.basename(y.display_name.downcase, '.*')
             if result.zero?
               result = File.extname(x.display_name.downcase) <=> File.extname(y.display_name.downcase)
-              if result.zero?
+              if result.zero? && !(x.path.nil? || y.path.nil?)
                 result = x.path.downcase <=> y.path.downcase
               end
             end
             result
           end
+        end
+
+        # @return [Array<PBXBuildFile>] the build files associated with the
+        #         current reference proxy.
+        #
+        def build_files
+          referrers.grep(PBXBuildFile)
+        end
+
+        # In addition to removing the reference proxy, this will also remove any
+        # items related to this reference.
+        #
+        # @see AbstractObject#remove_from_project
+        #
+        # @return [void]
+        #
+        def remove_from_project
+          build_files.each(&:remove_from_project)
+          super
         end
       end
 

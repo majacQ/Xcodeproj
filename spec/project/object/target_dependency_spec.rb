@@ -66,6 +66,17 @@ module ProjectSpecs
       }
     end
 
+    it 'tree hash for target dependency without target proxy' do
+      target = @project.new_target(:static, 'Pods', :ios)
+      @target_dependency.target = target
+      target.dependencies << @target_dependency
+
+      @target_dependency.to_tree_hash.should == {
+        'displayName' => 'Pods',
+        'isa' => 'PBXTargetDependency',
+      }
+    end
+
     #----------------------------------------#
 
     describe '#display_name' do
@@ -84,6 +95,13 @@ module ProjectSpecs
         proxy.remote_info = 'Pods'
         @target_dependency.target_proxy = proxy
         @target_dependency.display_name.should == 'Pods'
+      end
+
+      it 'returns the product name if needed' do
+        product_ref = @project.new(XCSwiftPackageProductDependency)
+        product_ref.product_name = 'SwiftPackage'
+        @target_dependency.product_ref = product_ref
+        @target_dependency.display_name.should == 'SwiftPackage'
       end
     end
 
@@ -111,10 +129,19 @@ module ProjectSpecs
         @target_dependency.native_target_uuid.should == @target_dependency.target.uuid
       end
 
-      it "raises if target and target_proxy aren't set" do
+      it 'returns nil for a Swift Package product' do
+        product_ref = @project.new(XCSwiftPackageProductDependency)
+        product_ref.product_name = 'SwiftPackage'
+
+        @target_dependency.product_ref = product_ref
+        @target_dependency.native_target_uuid.nil?.should == true
+      end
+
+      it "raises if target, target_proxy, and product_ref aren't set" do
         @target_dependency.name = 'TargetName'
         @target_dependency.target.nil?.should == true
         @target_dependency.target_proxy.nil?.should == true
+        @target_dependency.product_ref.nil?.should == true
         should.raise do
           @target_dependency.native_target_uuid
         end.message.should.include "Expected target or target_proxy, from which to fetch a uuid for target 'TargetName'." \
